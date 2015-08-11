@@ -1,0 +1,48 @@
+[submodule "examples/AreaChart"]
+	path = examples/AreaChart
+	url = git@gist.github.com:/b9658ffa431f1ffb8d6b.git
+[submodule "examples/CandleStickChart"]
+	path = examples/CandleStickChart
+	url = git@gist.github.com:/b13b739458e65ff93f4a.git
+[submodule "examples/CandleStickStockScaleChart"]
+	path = examples/CandleStickStockScaleChart
+	url = git@gist.github.com:/1eac0cb78f27b31415ac.git
+[submodule "examples/CandleStickStockScaleChartWithVolumeHistogramV1"]
+	path = examples/CandleStickStockScaleChartWithVolumeHistogramV1
+	url = git@gist.github.com:/88cd65baa331d57caa83.git
+[submodule "examples/CandleStickStockScaleChartWithVolumeHistogramV2"]
+	path = examples/CandleStickStockScaleChartWithVolumeHistogramV2
+	url = git@gist.github.com:/0a54ca33b05001f17f8f.git
+[submodule "examples/CandleStickChartWithCHMousePointer"]
+	path = examples/CandleStickChartWithCHMousePointer
+	url = git@gist.github.com:/261fa4bc7b67536eb789.git
+[submodule "examples/CandleStickChartWithZoomPan"]
+	path = examples/CandleStickChartWithZoomPan
+	url = git@gist.github.com:/a8465abe0061df1b7976.git
+[submodule "examples/CandleStickChartWithMA"]
+	path = examples/CandleStickChartWithMA
+	url = git@gist.github.com:/a27298bb7ae613d48ba2.git
+[submodule "examples/CandleStickChartWithEdge"]
+	path = examples/CandleStickChartWithEdge
+	url = git@gist.github.com:/70ea3fe28ad35bf3ed4c.git
+[submodule "examples/HaikinAshi"]
+	path = examples/HaikinAshi
+	url = git@gist.github.com:/51379c24e9751d46dcea.git
+[submodule "examples/Kagi"]
+	path = examples/Kagi
+	url = git@gist.github.com:/d1e5b75ac12f754bb21d.git
+[submodule "examples/PointAndFigure"]
+	path = examples/PointAndFigure
+	url = git@gist.github.com:/d43ef867bead0f1de663.git
+[submodule "examples/Renko"]
+	path = examples/Renko
+	url = git@gist.github.com:/df51fa445c26e123beb9.git
+[submodule "examples/CandleStickStockScaleChartWithVolumeHistogramV3"]
+	path = examples/CandleStickStockScaleChartWithVolumeHistogramV3
+	url = git@gist.github.com:/2dc9dd83567cd41c830a.git
+[submodule "examples/CandleStickChartWithMACDIndicator"]
+	path = examples/CandleStickChartWithMACDIndicator
+	url = git@gist.github.com:/109a2b8021689e1ffc79.git
+[submodule "examples/CandleStickChartWithMACDIndicatorCanvas"]
+	path = examples/CandleStickChartWithMACDIndicatorCanvas
+	url = git@gist.github.com:/f7d18bd9a88b97aa069f.git

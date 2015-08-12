@@ -53,6 +53,8 @@ examplesToPublish.forEach(function (eachEx) {
 		.pipe(replaceStream(/\n\n/, "\n"))
 		.pipe(replaceStream(/\n\n/, "\n"))
 		.pipe(replaceStream(/\n\n/, "\n"))
+		.pipe(replaceStream(/\n\n/, "\n"))
+		.pipe(replaceStream(/\n\n/, "\n"))
 		.pipe(replaceStream(/var ReStock = .*/, ""))
 		.pipe(replaceStream(/module.exports = .*/, getFunctionFor(eachEx, mode)))
 		.pipe(fs.createWriteStream(path.join(root, "examples", eachEx, eachEx + ".jsx")));

@@ -3,42 +3,40 @@ var fs = require("fs");
 var replaceStream = require("replacestream");
 
 var getFunctionFor = function(chartName, mode) {
-	var tsvFile = mode === "DEV" ? "\"../../data/MSFT.tsv\"" : "\"//rrag.github.io/react-stockcharts/data/MSFT.tsv\"";
-	/*eslint-disable */
-	var r = "var parseDate = d3.time.format(\"%Y-%m-%d\").parse;" + "\n" +
-	"d3.tsv(" + tsvFile + ", (err, data) => {" + "\n" +
-	"	/* change MSFT.tsv to MSFT_full.tsv above to see how this works with lots of data points */" + "\n" +
-	"	data.forEach((d, i) => {" + "\n" +
-	"		d.date = new Date(parseDate(d.date).getTime());"+ "\n" +
-	"		d.open = +d.open;"+ "\n" +
-	"		d.high = +d.high;"+ "\n" +
-	"		d.low = +d.low;"+ "\n" +
-	"		d.close = +d.close;"+ "\n" +
-	"		d.volume = +d.volume;"+ "\n" +
-	"		// console.log(d);"+ "\n" +
-	"	});"+ "\n" +
-	"	React.render(<" + chartName + " data={data} />, document.getElementById(\"chart\"));"+ "\n" +
-	"});"
-	/*eslint-enable */
+	var tsvFile = mode === "DEV" ? "../../data/MSFT.tsv" : "//rrag.github.io/react-stockcharts/data/MSFT.tsv";
+	var r = `var parseDate = d3.time.format("%Y-%m-%d").parse;
+d3.tsv("${ tsvFile }", (err, data) => {
+	/* change MSFT.tsv to MSFT_full.tsv above to see how this works with lots of data points */
+	data.forEach((d, i) => {
+		d.date = new Date(parseDate(d.date).getTime());
+		d.open = +d.open;
+		d.high = +d.high;
+		d.low = +d.low;
+		d.close = +d.close;
+		d.volume = +d.volume;
+		// console.log(d);
+	});
+	/* change the type from svg to hybrid to see how it works with canvas + svg */
+	React.render(<${ chartName } data={data} type=\"svg\"/>, document.getElementById(\"chart\"));
+});`
 	return r;
 };
 
 var examplesToPublish = ["AreaChart",
 	"CandleStickChart",
+	"CandleStickChartWithCHMousePointer",
+	"CandleStickChartWithEdge",
+	"CandleStickChartWithMA",
+	"CandleStickChartWithMACDIndicator",
+	"CandleStickChartWithZoomPan",
 	"CandleStickStockScaleChart",
 	"CandleStickStockScaleChartWithVolumeHistogramV1",
 	"CandleStickStockScaleChartWithVolumeHistogramV2",
 	"CandleStickStockScaleChartWithVolumeHistogramV3",
-	"CandleStickChartWithCHMousePointer",
-	"CandleStickChartWithZoomPan",
-	"CandleStickChartWithMA",
-	"CandleStickChartWithEdge",
-	"CandleStickChartWithMACDIndicator",
-	"CandleStickChartWithMACDIndicatorCanvas", // comment this later
 	"HaikinAshi",
 	"Kagi",
 	"PointAndFigure",
-	"Renko"
+	"Renko",
 ];
 
 var root = path.join(__dirname, "..");
@@ -52,7 +50,9 @@ examplesToPublish.forEach(function (eachEx) {
 		.pipe(replaceStream(/\n\n/, "\n"))
 		.pipe(replaceStream(/\n\n/, "\n"))
 		.pipe(replaceStream(/\n\n/, "\n"))
-		.pipe(replaceStream(/module.exports = .*/, getFunctionFor(eachEx, mode)))
+		.pipe(replaceStream(/\n\n/, "\n"))
+		.pipe(replaceStream(/\n\n/, "\n"))
+		.pipe(replaceStream(/export default .*/, getFunctionFor(eachEx, mode)))
 		.pipe(fs.createWriteStream(path.join(root, "examples", eachEx, eachEx + ".jsx")));
 
 	fs.createReadStream(path.join(root, "index." + mode + ".html"))

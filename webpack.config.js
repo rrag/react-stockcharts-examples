@@ -4,7 +4,7 @@ var path = require("path");
 module.exports = {
 	context: __dirname,
 	entry: {
-		app: path.join(__dirname, "node_modules/react-stockcharts/src/index.js"),
+		app: path.join(__dirname, "node_modules/react-stockcharts-src/src/index.js"),
 	},
 	devtool: "sourcemap",
 	debug: true,
@@ -19,6 +19,10 @@ module.exports = {
 		loaders: [
 			{ test: /\.(js|jsx)$/, loaders: ["babel"], exclude: /node_modules/ },
 		]
+	},
+	devServer: {
+		contentBase: path.join(__dirname, "examples"),
+		port: 8090,
 	},
 	plugins: [
 		new webpack.NoErrorsPlugin(),

@@ -11,19 +11,23 @@
   "dependencies": {
     "d3": "^3.5.6",
     "react": "^0.14.0-beta3",
-    "react-stockcharts": "git://github.com/rrag/react-stockcharts.git"
+    "react-stockcharts-src": "git://github.com/rrag/react-stockcharts.git",
+    "react-stockcharts": "0.2.0"
   },
   "devDependencies": {
     "babel-core": "^5.8.22",
     "babel-loader": "^5.3.2",
-    "serve-static": "^1.10.0",
+    "react-stockcharts": "^0.2.0",
     "replacestream": "^4.0.0",
+    "save-svg-as-png": "^1.0.0",
+    "serve-static": "^1.10.0",
     "webpack": "^1.11.0",
     "webpack-dev-server": "^1.10.1"
   },
   "scripts": {
     "clean": "rm -rf ./build",
-    "serve": "node scripts/serve.js",
+    "serve:examples": "node scripts/serve.js ../webpack.config.js",
+    "serve:test:webpack": "node scripts/serve.js ../webpack.config.npmbuild.js",
     "publish:dev": "node scripts/buildexamples.js DEV",
     "publish:prod": "node scripts/buildexamples.js PROD"
   },

@@ -3,7 +3,7 @@ var fs = require("fs");
 var replaceStream = require("replacestream");
 
 var getFunctionFor = function(chartName, mode) {
-	var tsvFile = mode === "DEV" ? "../../data/MSFT.tsv" : "//rrag.github.io/react-stockcharts/data/MSFT.tsv";
+	var tsvFile = mode === "DEV" ? "../docs/data/MSFT.tsv" : "//rrag.github.io/react-stockcharts/data/MSFT.tsv";
 	var r = `var parseDate = d3.time.format("%Y-%m-%d").parse;
 d3.tsv("${ tsvFile }", (err, data) => {
 	/* change MSFT.tsv to MSFT_full.tsv above to see how this works with lots of data points */
@@ -45,7 +45,7 @@ var args = process.argv.slice(2);
 var mode = args[0];
 
 examplesToPublish.forEach(function (eachEx) {
-	fs.createReadStream(path.join(root, "node_modules", "react-stockcharts", "docs", "lib", "charts", eachEx + ".jsx"))
+	fs.createReadStream(path.join(root, "node_modules", "react-stockcharts-src", "docs", "lib", "charts", eachEx + ".jsx"))
 		.pipe(replaceStream(/import .*/g, ""))
 		.pipe(replaceStream(/\n\n/, "\n"))
 		.pipe(replaceStream(/\n\n/, "\n"))
@@ -55,7 +55,7 @@ examplesToPublish.forEach(function (eachEx) {
 		.pipe(replaceStream(/export default .*/, getFunctionFor(eachEx, mode)))
 		.pipe(fs.createWriteStream(path.join(root, "examples", eachEx, eachEx + ".jsx")));
 
-	fs.createReadStream(path.join(root, "index." + mode + ".html"))
+	fs.createReadStream(path.join(root, "examples", "index." + mode + ".html"))
 		.pipe(replaceStream(/CHART_NAME_HERE/g, eachEx))
 		.pipe(fs.createWriteStream(path.join(root, "examples", eachEx, "index.html")));
 });

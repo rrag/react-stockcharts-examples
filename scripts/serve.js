@@ -5,8 +5,6 @@ var WebpackDevServer = require("webpack-dev-server");
 function serve(webpackConfig) {
 	var watchConfig = Object.create(webpackConfig);
 
-	console.log(watchConfig.output);
-
 	var serveStatic = require('serve-static')
 	var path = require("path");
 

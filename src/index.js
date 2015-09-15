@@ -47,6 +47,13 @@ d3.tsv("docs/data/MSFT.tsv", (err, data) => {
 		d.volume = +d.volume;
 		// console.log(d);
 	});
-	/* change the type from svg to hybrid to see how it works with canvas + svg */
-	React.render(<AreaChart data={data} type="svg"/>, document.getElementById("chart"));
+
+	var i = 5;
+
+	setInterval(function () {
+		var chartData = data.slice(0, i);
+		i++;
+		console.log("here")
+		React.render(<AreaChart data={chartData} type="svg"/>, document.getElementById("chart"));
+	}, 1000);
 });

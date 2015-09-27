@@ -46,3 +46,15 @@
 [submodule "examples/CandleStickChartWithMACDIndicatorCanvas"]
 	path = examples/CandleStickChartWithMACDIndicatorCanvas
 	url = git@gist.github.com:/f7d18bd9a88b97aa069f.git
+[submodule "examples/CandleStickChartWithBollingerBandOverlay"]
+	path = examples/CandleStickChartWithBollingerBandOverlay
+	url = git@gist.github.com:/b993d5fcc5c09dd66a6e.git
+[submodule "examples/CandleStickChartWithRSIIndicator"]
+	path = examples/CandleStickChartWithRSIIndicator
+	url = git@gist.github.com:/78817a1ccf0a450eed0c.git
+[submodule "examples/CandleStickChartWithFullStochasticsIndicator"]
+	path = examples/CandleStickChartWithFullStochasticsIndicator
+	url = git@gist.github.com:/3957c24595cc025eb3ef.git
+[submodule "examples/CandleStickChartWithUpdatingData"]
+	path = examples/CandleStickChartWithUpdatingData
+	url = git@gist.github.com:/555ea9d11c621a895171.git

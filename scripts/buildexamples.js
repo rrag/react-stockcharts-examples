@@ -2,9 +2,10 @@ var path = require("path");
 var fs = require("fs");
 var replaceStream = require("replacestream");
 
-var getFunctionFor = function(chartName, mode) {
+var renderChart = function(chartName, mode) {
 	var tsvFile = mode === "DEV" ? "../docs/data/MSFT.tsv" : "//rrag.github.io/react-stockcharts/data/MSFT.tsv";
-	var r = `var parseDate = d3.time.format("%Y-%m-%d").parse;
+	var render = `
+var parseDate = d3.time.format("%Y-%m-%d").parse;
 d3.tsv("${ tsvFile }", (err, data) => {
 	/* change MSFT.tsv to MSFT_full.tsv above to see how this works with lots of data points */
 	data.forEach((d, i) => {
@@ -16,10 +17,10 @@ d3.tsv("${ tsvFile }", (err, data) => {
 		d.volume = +d.volume;
 		// console.log(d);
 	});
-	/* change the type from svg to hybrid to see how it works with canvas + svg */
-	React.render(<${ chartName } data={data} type=\"svg\"/>, document.getElementById(\"chart\"));
+	/* change the type from hybrid to svg to compare the performance between svg and canvas */
+	ReactDOM.render(<TypeChooser type="hybrid">{type => <${ chartName } data={data} type={type} />}</TypeChooser>, document.getElementById("chart"));
 });`
-	return r;
+	return render;
 };
 
 var examplesToPublish = ["AreaChart",
@@ -37,6 +38,10 @@ var examplesToPublish = ["AreaChart",
 	"Kagi",
 	"PointAndFigure",
 	"Renko",
+	"CandleStickChartWithBollingerBandOverlay",
+	"CandleStickChartWithRSIIndicator",
+	"CandleStickChartWithFullStochasticsIndicator",
+	"CandleStickChartWithUpdatingData",
 ];
 
 var root = path.join(__dirname, "..");
@@ -47,12 +52,13 @@ var mode = args[0];
 examplesToPublish.forEach(function (eachEx) {
 	fs.createReadStream(path.join(root, "node_modules", "react-stockcharts-src", "docs", "lib", "charts", eachEx + ".jsx"))
 		.pipe(replaceStream(/import .*/g, ""))
+		.pipe(replaceStream(/var { ChartWidthMixin } = ReStock.helper;/, "var { ChartWidthMixin, TypeChooser } = ReStock.helper;"))
 		.pipe(replaceStream(/\n\n/, "\n"))
 		.pipe(replaceStream(/\n\n/, "\n"))
 		.pipe(replaceStream(/\n\n/, "\n"))
 		.pipe(replaceStream(/\n\n/, "\n"))
 		.pipe(replaceStream(/\n\n/, "\n"))
-		.pipe(replaceStream(/export default .*/, getFunctionFor(eachEx, mode)))
+		.pipe(replaceStream(/export default .*/, renderChart(eachEx, mode)))
 		.pipe(fs.createWriteStream(path.join(root, "examples", eachEx, eachEx + ".jsx")));
 
 	fs.createReadStream(path.join(root, "examples", "index." + mode + ".html"))

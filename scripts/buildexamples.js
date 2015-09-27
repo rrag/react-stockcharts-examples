@@ -62,14 +62,13 @@ examplesToPublish.forEach(function (eachEx) {
 		.pipe(replaceStream(/export default .*/, renderChart(eachEx, mode)))
 		.pipe(fs.createWriteStream(path.join(root, "examples", eachEx, eachEx + ".jsx")));
 
-
 	fs.readFile(source, "utf8", function(err, data) {
 
-		var height = parseInt(data.match(/<ChartCanvas .*? height=\{([^}]*)/)[1], 10);
-		// console.log(err, eachEx, `${ height + 100 }px`);
+		var height = (parseInt(data.match(/<ChartCanvas .*? height=\{([^}]*)/)[1], 10) + 50);
+		// console.log(err, eachEx, `${ height }px`);
 		fs.createReadStream(path.join(root, "examples", "index." + mode + ".html"))
 			.pipe(replaceStream(/CHART_NAME_HERE/g, eachEx))
-			.pipe(replaceStream(/HEIGHT_HERE/g, `${ height + 100 }px`))
+			.pipe(replaceStream(/HEIGHT_HERE/g, `${ height }px`))
 			.pipe(fs.createWriteStream(path.join(root, "examples", eachEx, "index.html")));
 	})
 

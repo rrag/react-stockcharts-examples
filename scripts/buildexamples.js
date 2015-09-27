@@ -50,7 +50,8 @@ var args = process.argv.slice(2);
 var mode = args[0];
 
 examplesToPublish.forEach(function (eachEx) {
-	fs.createReadStream(path.join(root, "node_modules", "react-stockcharts-src", "docs", "lib", "charts", eachEx + ".jsx"))
+	var source = path.join(root, "node_modules", "react-stockcharts-src", "docs", "lib", "charts", eachEx + ".jsx");
+	fs.createReadStream(source)
 		.pipe(replaceStream(/import .*/g, ""))
 		.pipe(replaceStream(/var { ChartWidthMixin } = ReStock.helper;/, "var { ChartWidthMixin, TypeChooser } = ReStock.helper;"))
 		.pipe(replaceStream(/\n\n/, "\n"))
@@ -61,8 +62,16 @@ examplesToPublish.forEach(function (eachEx) {
 		.pipe(replaceStream(/export default .*/, renderChart(eachEx, mode)))
 		.pipe(fs.createWriteStream(path.join(root, "examples", eachEx, eachEx + ".jsx")));
 
-	fs.createReadStream(path.join(root, "examples", "index." + mode + ".html"))
-		.pipe(replaceStream(/CHART_NAME_HERE/g, eachEx))
-		.pipe(fs.createWriteStream(path.join(root, "examples", eachEx, "index.html")));
+
+	fs.readFile(source, "utf8", function(err, data) {
+
+		var height = parseInt(data.match(/<ChartCanvas .*? height=\{([^}]*)/)[1], 10);
+		// console.log(err, eachEx, `${ height + 100 }px`);
+		fs.createReadStream(path.join(root, "examples", "index." + mode + ".html"))
+			.pipe(replaceStream(/CHART_NAME_HERE/g, eachEx))
+			.pipe(replaceStream(/HEIGHT_HERE/g, `${ height + 100 }px`))
+			.pipe(fs.createWriteStream(path.join(root, "examples", eachEx, "index.html")));
+	})
+
 });
 

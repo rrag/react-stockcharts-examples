@@ -41,7 +41,7 @@ var examplesToPublish = ["AreaChart",
 	"CandleStickChartWithBollingerBandOverlay",
 	"CandleStickChartWithRSIIndicator",
 	"CandleStickChartWithFullStochasticsIndicator",
-	"CandleStickChartWithUpdatingData",
+	// "CandleStickChartWithUpdatingData",
 ];
 
 var root = path.join(__dirname, "..");

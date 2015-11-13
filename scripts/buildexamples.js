@@ -53,7 +53,7 @@ examplesToPublish.forEach(function (eachEx) {
 	var source = path.join(root, "node_modules", "react-stockcharts-src", "docs", "lib", "charts", eachEx + ".jsx");
 	fs.createReadStream(source)
 		.pipe(replaceStream(/import .*/g, ""))
-		.pipe(replaceStream(/var { ChartWidthMixin } = ReStock.helper;/, "var { ChartWidthMixin, TypeChooser } = ReStock.helper;"))
+		.pipe(replaceStream(/var { fitWidth } = ReStock.helper;/, "var { fitWidth, TypeChooser } = ReStock.helper;"))
 		.pipe(replaceStream(/\n\n/, "\n"))
 		.pipe(replaceStream(/\n\n/, "\n"))
 		.pipe(replaceStream(/\n\n/, "\n"))

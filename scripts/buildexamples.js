@@ -42,6 +42,7 @@ var examplesToPublish = ["AreaChart",
 	"CandleStickChartWithRSIIndicator",
 	"CandleStickChartWithFullStochasticsIndicator",
 	// "CandleStickChartWithUpdatingData",
+	"CandleStickChartWithDarkTheme",
 ];
 
 var root = path.join(__dirname, "..");
@@ -64,8 +65,8 @@ examplesToPublish.forEach(function (eachEx) {
 
 	fs.readFile(source, "utf8", function(err, data) {
 
-		var height = (parseInt(data.match(/<ChartCanvas .*? height=\{([^}]*)/)[1], 10) + 50);
-		// console.log(err, eachEx, `${ height }px`);
+		var height = (parseInt(data.match(/<ChartCanvas .*? height=\{([^}]*)/)[1], 10) + 20);
+		console.log(err, eachEx, `${ height }px`);
 		fs.createReadStream(path.join(root, "examples", "index." + mode + ".html"))
 			.pipe(replaceStream(/CHART_NAME_HERE/g, eachEx))
 			.pipe(replaceStream(/HEIGHT_HERE/g, `${ height }px`))
@@ -74,3 +75,29 @@ examplesToPublish.forEach(function (eachEx) {
 
 });
 
+
+
+setTimeout(function () {
+	var darkThemeIndexSrc = path.join(root, "examples", "CandleStickChartWithDarkTheme", "index.html");
+	var darkThemeIndexTarget = path.join(root, "examples", "CandleStickChartWithDarkTheme", "index.html.target");
+	fs.createReadStream(darkThemeIndexSrc)
+		.pipe(replaceStream("</head>",
+`  <style>
+      body {
+        background: #303030;
+      }
+      .react-stockcharts-tooltip {
+        fill: white;
+      }
+      .react-stockcharts-tooltip-label {
+        fill: yellow;
+      }
+    </style>
+  </head>`))
+		.pipe(fs.createWriteStream(darkThemeIndexTarget));
+
+	fs.unlink(darkThemeIndexSrc, function(err) {
+		console.log("Deleted", err);
+	});
+	fs.renameSync(darkThemeIndexTarget, darkThemeIndexSrc)
+}, 100);

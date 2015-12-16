@@ -43,6 +43,8 @@ var examplesToPublish = ["AreaChart",
 	"CandleStickChartWithFullStochasticsIndicator",
 	// "CandleStickChartWithUpdatingData",
 	"CandleStickChartWithDarkTheme",
+	"CandleStickChartWithClickHandlerCallback",
+	"CandleStickChartWithBrush",
 ];
 
 var root = path.join(__dirname, "..");

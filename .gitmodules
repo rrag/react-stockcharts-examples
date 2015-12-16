@@ -61,3 +61,9 @@
 [submodule "examples/CandleStickChartWithDarkTheme"]
 	path = examples/CandleStickChartWithDarkTheme
 	url = git@gist.github.com:23dd469fe32d7fc1977c.git
+[submodule "examples/CandleStickChartWithClickHandlerCallback"]
+	path = examples/CandleStickChartWithClickHandlerCallback
+	url = git@gist.github.com:67894a887e52891aa2a3.git
+[submodule "examples/CandleStickChartWithBrush"]
+	path = examples/CandleStickChartWithBrush
+	url = git@gist.github.com:11c28c8e6612055ba8a7.git

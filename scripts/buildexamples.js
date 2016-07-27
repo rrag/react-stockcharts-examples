@@ -8,6 +8,8 @@ var root = path.join(__dirname, "..");
 var args = process.argv.slice(2);
 var mode = args[0];
 
+const parseDate = `d3.time.format("%Y-%m-%d").parse`
+const parseDateTime = `d3.time.format("%Y-%m-%d %H:%M:%S").parse`
 
 var examplesToPublish_TSV = [
 	"AreaChart",
@@ -80,8 +82,8 @@ var examplesToPublish_HorizontalStackedBar = [
 
 examplesToPublish_TSV.forEach(writeChart(renderChartWithOHLCData()));
 
-examplesToPublish_ContinuousIntraday.forEach(writeChart(renderChartWithOHLCData("bitfinex_xbtusd_1m.csv", "csv")));
-examplesToPublish_DiscontinuousIntraday.forEach(writeChart(renderChartWithOHLCData("MSFT_INTRA_DAY.tsv")));
+examplesToPublish_ContinuousIntraday.forEach(writeChart(renderChartWithOHLCData("bitfinex_xbtusd_1m.csv", "csv", `new Date(${parseDateTime}(d.date).getTime())`)));
+examplesToPublish_DiscontinuousIntraday.forEach(writeChart(renderChartWithOHLCData("MSFT_INTRA_DAY.tsv", "tsv", `new Date(+d.date)`)));
 
 examplesToPublish_TSV_Compare.forEach(writeChart(renderChartWithOHLCData("comparison.tsv")));
 examplesToPublish_Bubble.forEach(writeChart(renderChartWithFile("bubble.json")));
@@ -90,21 +92,20 @@ examplesToPublish_GroupedBar.forEach(writeChart(renderChartWithFile("groupedBarD
 // examplesToPublish_HorizontalBar.forEach(writeChart(renderChartWithBubbleData));
 // examplesToPublish_HorizontalStackedBar.forEach(writeChart(renderChartWithBubbleData));
 
-function renderChartWithOHLCData(fileName, dataType) {
-	var file = fileName || "MSFT.tsv"
-	dataType = dataType || "tsv";
 
+function renderChartWithOHLCData(fileName, dataType = "tsv", newDate = `new Date(${parseDate}(d.date).getTime())`) {
+	var file = fileName || "MSFT.tsv"
 	var comment = !!fileName
 		? ""
 		: "/* change MSFT.tsv to MSFT_full.tsv above to see how this works with lots of data points */"
 	return (chartName, mode) => {
 		var tsvFile = mode === "DEV" ? `../docs/data/${file}` : `//rrag.github.io/react-stockcharts/data/${file}`;
 		var render = `
-var parseDate = d3.time.format("%Y-%m-%d").parse;
+var parseDate = ${parseDateTime};
 d3["${dataType}"]("${tsvFile}", (err, data) => {
 	${comment}
 	data.forEach((d, i) => {
-		d.date = new Date(parseDate(d.date).getTime());
+		d.date = ${newDate};
 		d.open = +d.open;
 		d.high = +d.high;
 		d.low = +d.low;

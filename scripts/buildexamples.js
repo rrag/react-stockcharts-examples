@@ -1,13 +1,88 @@
+
 var path = require("path");
 var fs = require("fs");
 var replaceStream = require("replacestream");
 
-var renderChart = function(chartName, mode) {
-	var tsvFile = mode === "DEV" ? "../docs/data/MSFT.tsv" : "//rrag.github.io/react-stockcharts/data/MSFT.tsv";
-	var render = `
+var root = path.join(__dirname, "..");
+
+var args = process.argv.slice(2);
+var mode = args[0];
+
+
+var examplesToPublish_TSV = [
+	"AreaChart",
+	"CandleStickChart",
+	"CandleStickChartWithCHMousePointer",
+	"CandleStickChartWithEdge",
+	"CandleStickChartWithMA",
+	"CandleStickChartWithMACDIndicator",
+	"CandleStickChartWithZoomPan",
+	"CandleStickStockScaleChart",
+	"CandleStickStockScaleChartWithVolumeBarV1",
+	"CandleStickStockScaleChartWithVolumeBarV2",
+	"CandleStickStockScaleChartWithVolumeBarV3",
+	"HaikinAshi",
+	"Kagi",
+	"PointAndFigure",
+	"Renko",
+	"CandleStickChartWithBollingerBandOverlay",
+	"CandleStickChartWithRSIIndicator",
+	"CandleStickChartWithFullStochasticsIndicator",
+	"CandleStickChartWithDarkTheme",
+	"CandleStickChartWithClickHandlerCallback",
+	"CandleStickChartWithBrush",
+	"LineAndScatterChart",
+	"CandleStickChartWithForceIndexIndicator",
+	"OHLCChartWithElderRayIndicator",
+	"OHLCChartWithElderImpulseIndicator",
+	"CandleStickChartWithInteractiveIndicator",
+	"CandleStickChartWithFibonacciInteractiveIndicator",
+];
+
+//	"CandleStickChartWithUpdatingData",
+
+var examplesToPublish_TSV_Compare = [
+	"CandleStickChartWithCompare"
+]
+
+var examplesToPublish_Bubble = [
+	"BubbleChart",
+];
+
+var examplesToPublish_Bar = [
+	"BarChart",
+];
+
+var examplesToPublish_GroupedBar = [
+	"GroupedBarChart",
+	"StackedBarChart",
+];
+var examplesToPublish_HorizontalBar = [
+	"HorizontalBarChart",
+];
+var examplesToPublish_HorizontalStackedBar = [
+	"HorizontalStackedBarChart",
+];
+
+examplesToPublish_TSV.forEach(writeChart(renderChartWithOHLCData()));
+examplesToPublish_TSV_Compare.forEach(writeChart(renderChartWithOHLCData("comparison.tsv")));
+examplesToPublish_Bubble.forEach(writeChart(renderChartWithFile("bubble.json")));
+examplesToPublish_Bar.forEach(writeChart(renderChartWithFile("barData.json")));
+examplesToPublish_GroupedBar.forEach(writeChart(renderChartWithFile("groupedBarData.json")));
+// examplesToPublish_HorizontalBar.forEach(writeChart(renderChartWithBubbleData));
+// examplesToPublish_HorizontalStackedBar.forEach(writeChart(renderChartWithBubbleData));
+
+function renderChartWithOHLCData(fileName) {
+	var file = fileName || "MSFT.tsv"
+	var comment = !!fileName
+		? ""
+		: "/* change MSFT.tsv to MSFT_full.tsv above to see how this works with lots of data points */"
+	return (chartName, mode) => {
+		var tsvFile = mode === "DEV" ? `../docs/data/${file}` : `//rrag.github.io/react-stockcharts/data/${file}`;
+		var render = `
 var parseDate = d3.time.format("%Y-%m-%d").parse;
-d3.tsv("${ tsvFile }", (err, data) => {
-	/* change MSFT.tsv to MSFT_full.tsv above to see how this works with lots of data points */
+d3.tsv("${tsvFile}", (err, data) => {
+	${comment}
 	data.forEach((d, i) => {
 		d.date = new Date(parseDate(d.date).getTime());
 		d.open = +d.open;
@@ -20,63 +95,53 @@ d3.tsv("${ tsvFile }", (err, data) => {
 	/* change the type from hybrid to svg to compare the performance between svg and canvas */
 	ReactDOM.render(<TypeChooser type="hybrid">{type => <${ chartName } data={data} type={type} />}</TypeChooser>, document.getElementById("chart"));
 });`
-	return render;
+		return render;
+	};
 };
 
-var examplesToPublish = ["AreaChart",
-	"CandleStickChart",
-	"CandleStickChartWithCHMousePointer",
-	"CandleStickChartWithEdge",
-	"CandleStickChartWithMA",
-	"CandleStickChartWithMACDIndicator",
-	"CandleStickChartWithZoomPan",
-	"CandleStickStockScaleChart",
-	"CandleStickStockScaleChartWithVolumeHistogramV1",
-	"CandleStickStockScaleChartWithVolumeHistogramV2",
-	"CandleStickStockScaleChartWithVolumeHistogramV3",
-	"HaikinAshi",
-	"Kagi",
-	"PointAndFigure",
-	"Renko",
-	"CandleStickChartWithBollingerBandOverlay",
-	"CandleStickChartWithRSIIndicator",
-	"CandleStickChartWithFullStochasticsIndicator",
-	// "CandleStickChartWithUpdatingData",
-	"CandleStickChartWithDarkTheme",
-	"CandleStickChartWithClickHandlerCallback",
-	"CandleStickChartWithBrush",
-];
+function renderChartWithFile(fileName, dataType) {
+	dataType = dataType || "json";
+	return (chartName, mode) => {
+		var inputFile = mode === "DEV" ? `../docs/data/${fileName}` : `//rrag.github.io/react-stockcharts/data/${fileName}`;
+		var render = `
+d3["${dataType}"]("${ inputFile }", (err, data) => {
+	ReactDOM.render(<TypeChooser type="hybrid">{type => <${ chartName } data={data} type={type} />}</TypeChooser>, document.getElementById("chart"));
+});`
+		return render;
+	};
+}
 
-var root = path.join(__dirname, "..");
+function writeChart(chartRenderer) {
+	return (eachEx) => {
+		var source = path.join(root, "node_modules", "react-stockcharts-src", "docs", "lib", "charts", eachEx + ".jsx");
+		fs.createReadStream(source)
+			.pipe(replaceStream(/var { fitWidth } = ReStock.helper;/, "var { fitWidth, TypeChooser } = rs.helper;"))
+			.pipe(replaceStream(/ReStock/g, "rs"))
+			.pipe(replaceStream(/import rs .*/g, "var rs = ReStock.default;"))
+			.pipe(replaceStream(/import .*/g, ""))
+			.pipe(replaceStream(/\n\n/, "\n"))
+			.pipe(replaceStream(/\n\n/, "\n"))
+			.pipe(replaceStream(/\n\n/, "\n"))
+			.pipe(replaceStream(/\n\n/, "\n"))
+			.pipe(replaceStream(/\n\n/, "\n"))
+			.pipe(replaceStream(/export default .*/, chartRenderer(eachEx, mode)))
+			.pipe(fs.createWriteStream(path.join(root, "examples", eachEx, eachEx + ".jsx")));
 
-var args = process.argv.slice(2);
-var mode = args[0];
+		fs.readFile(source, "utf8", function(err, data) {
 
-examplesToPublish.forEach(function (eachEx) {
-	var source = path.join(root, "node_modules", "react-stockcharts-src", "docs", "lib", "charts", eachEx + ".jsx");
-	fs.createReadStream(source)
-		.pipe(replaceStream(/import .*/g, ""))
-		.pipe(replaceStream(/var { fitWidth } = ReStock.helper;/, "var { fitWidth, TypeChooser } = ReStock.helper;"))
-		.pipe(replaceStream(/\n\n/, "\n"))
-		.pipe(replaceStream(/\n\n/, "\n"))
-		.pipe(replaceStream(/\n\n/, "\n"))
-		.pipe(replaceStream(/\n\n/, "\n"))
-		.pipe(replaceStream(/\n\n/, "\n"))
-		.pipe(replaceStream(/export default .*/, renderChart(eachEx, mode)))
-		.pipe(fs.createWriteStream(path.join(root, "examples", eachEx, eachEx + ".jsx")));
+			var height = (parseInt(data.match(/<ChartCanvas .*? height=\{([^}]*)/)[1], 10) + 20);
+			console.log(err, eachEx, `${ height }px`);
+			fs.createReadStream(path.join(root, "examples", "index." + mode + ".html"))
+				.pipe(replaceStream(/CHART_NAME_HERE/g, eachEx))
+				.pipe(fs.createWriteStream(path.join(root, "examples", eachEx, "index.html")));
 
-	fs.readFile(source, "utf8", function(err, data) {
+			fs.createReadStream(path.join(root, "examples", ".block"))
+				.pipe(replaceStream(/HEIGHT_HERE/g, `${height}`))
+				.pipe(fs.createWriteStream(path.join(root, "examples", eachEx, ".block")));
+		})
 
-		var height = (parseInt(data.match(/<ChartCanvas .*? height=\{([^}]*)/)[1], 10) + 20);
-		console.log(err, eachEx, `${ height }px`);
-		fs.createReadStream(path.join(root, "examples", "index." + mode + ".html"))
-			.pipe(replaceStream(/CHART_NAME_HERE/g, eachEx))
-			.pipe(replaceStream(/HEIGHT_HERE/g, `${ height }px`))
-			.pipe(fs.createWriteStream(path.join(root, "examples", eachEx, "index.html")));
-	})
-
-});
-
+	};
+}
 
 
 setTimeout(function () {
@@ -102,4 +167,4 @@ setTimeout(function () {
 		console.log("Deleted", err);
 	});
 	fs.renameSync(darkThemeIndexTarget, darkThemeIndexSrc)
-}, 100);
+}, 1000);

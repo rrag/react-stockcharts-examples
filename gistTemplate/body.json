@@ -1,0 +1,9 @@
+{
+    "description": "",
+    "public": true,
+    "files": {
+        "README.md": {
+            "content": "TEST"
+        }
+    }
+}

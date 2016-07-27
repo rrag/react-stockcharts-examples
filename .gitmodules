@@ -7,12 +7,6 @@
 [submodule "examples/CandleStickStockScaleChart"]
 	path = examples/CandleStickStockScaleChart
 	url = git@gist.github.com:/1eac0cb78f27b31415ac.git
-[submodule "examples/CandleStickStockScaleChartWithVolumeHistogramV1"]
-	path = examples/CandleStickStockScaleChartWithVolumeHistogramV1
-	url = git@gist.github.com:/88cd65baa331d57caa83.git
-[submodule "examples/CandleStickStockScaleChartWithVolumeHistogramV2"]
-	path = examples/CandleStickStockScaleChartWithVolumeHistogramV2
-	url = git@gist.github.com:/0a54ca33b05001f17f8f.git
 [submodule "examples/CandleStickChartWithCHMousePointer"]
 	path = examples/CandleStickChartWithCHMousePointer
 	url = git@gist.github.com:/261fa4bc7b67536eb789.git
@@ -37,9 +31,6 @@
 [submodule "examples/Renko"]
 	path = examples/Renko
 	url = git@gist.github.com:/df51fa445c26e123beb9.git
-[submodule "examples/CandleStickStockScaleChartWithVolumeHistogramV3"]
-	path = examples/CandleStickStockScaleChartWithVolumeHistogramV3
-	url = git@gist.github.com:/2dc9dd83567cd41c830a.git
 [submodule "examples/CandleStickChartWithMACDIndicator"]
 	path = examples/CandleStickChartWithMACDIndicator
 	url = git@gist.github.com:/109a2b8021689e1ffc79.git
@@ -61,3 +52,51 @@
 [submodule "examples/CandleStickChartWithBrush"]
 	path = examples/CandleStickChartWithBrush
 	url = git@gist.github.com:11c28c8e6612055ba8a7.git
+[submodule "examples/LineAndScatterChart"]
+	path = examples/LineAndScatterChart
+	url = git@gist.github.com:/95ffd539fa4e0b4544cf.git
+[submodule "examples/BubbleChart"]
+	path = examples/BubbleChart
+	url = git@gist.github.com:/cb4bb2831987d787a98c.git
+[submodule "examples/BarChart"]
+	path = examples/BarChart
+	url = git@gist.github.com:/b87d124b8879c671f140.git
+[submodule "examples/GroupedBarChart"]
+	path = examples/GroupedBarChart
+	url = git@gist.github.com:/f683b0c93d839ac8af55.git
+[submodule "examples/StackedBarChart"]
+	path = examples/StackedBarChart
+	url = git@gist.github.com:/df6a83dce5fdf71fc73e.git
+[submodule "examples/HorizontalBarChart"]
+	path = examples/HorizontalBarChart
+	url = git@gist.github.com:/d295ab38c94c746aed4e.git
+[submodule "examples/HorizontalStackedBarChart"]
+	path = examples/HorizontalStackedBarChart
+	url = git@gist.github.com:/f8562bad75a7cc9c9343.git
+[submodule "examples/CandleStickChartWithForceIndexIndicator"]
+	path = examples/CandleStickChartWithForceIndexIndicator
+	url = git@gist.github.com:/1741fe3e882f0eb144af.git
+[submodule "examples/OHLCChartWithElderRayIndicator"]
+	path = examples/OHLCChartWithElderRayIndicator
+	url = git@gist.github.com:/0942a5f884a49efa7a14.git
+[submodule "examples/OHLCChartWithElderImpulseIndicator"]
+	path = examples/OHLCChartWithElderImpulseIndicator
+	url = git@gist.github.com:/d26ef33a49317e2841c9.git
+[submodule "examples/CandleStickChartWithInteractiveIndicator"]
+	path = examples/CandleStickChartWithInteractiveIndicator
+	url = git@gist.github.com:/63f666ef1159691d76cc.git
+[submodule "examples/CandleStickChartWithFibonacciInteractiveIndicator"]
+	path = examples/CandleStickChartWithFibonacciInteractiveIndicator
+	url = git@gist.github.com:/82bc46e6566618e429d9.git
+[submodule "examples/CandleStickStockScaleChartWithVolumeBarV1"]
+	path = examples/CandleStickStockScaleChartWithVolumeBarV1
+	url = git@gist.github.com:/88cd65baa331d57caa83.git
+[submodule "examples/CandleStickStockScaleChartWithVolumeBarV2"]
+	path = examples/CandleStickStockScaleChartWithVolumeBarV2
+	url = git@gist.github.com:/0a54ca33b05001f17f8f.git
+[submodule "examples/CandleStickStockScaleChartWithVolumeBarV3"]
+	path = examples/CandleStickStockScaleChartWithVolumeBarV3
+	url = git@gist.github.com:/2dc9dd83567cd41c830a.git
+[submodule "examples/CandleStickChartWithCompare"]
+	path = examples/CandleStickChartWithCompare
+	url = git@gist.github.com:759f1ada33878e3239a5.git

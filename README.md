@@ -29,3 +29,23 @@ npm i
 ```
 
 ### Test the examples
+
+
+
+### Create gist
+
+```
+function create_gist() {
+	TOKEN=$1
+    CHART_NAME=$2
+    rm -f gistTemplate/new.json
+    sed "s/\"description\": .*$/\"description\": \"$CHART_NAME with react-stockcharts\",/" gistTemplate/body.json > gistTemplate/new.json
+
+    curl \
+        -H "Authorization: token $TOKEN" \
+        --data @gistTemplate/new.json \
+        https://api.github.com/gists | grep '"url": "https://api.github.com/gists/'
+}
+
+$ create_gist <github auth token> <chart name>
+```

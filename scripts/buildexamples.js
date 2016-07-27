@@ -37,8 +37,22 @@ var examplesToPublish_TSV = [
 	"OHLCChartWithElderImpulseIndicator",
 	"CandleStickChartWithInteractiveIndicator",
 	"CandleStickChartWithFibonacciInteractiveIndicator",
+
+	"CandleStickChartWithAnnotation",
+	"CandleStickChartWithHoverTooltip",
+	"VolumeProfileChart",
+	"VolumeProfileBySessionChart",
+	"MovingAverageCrossOverAlgorithmV1",
+	"MovingAverageCrossOverAlgorithmV2",
 ];
 
+var examplesToPublish_ContinuousIntraday = [
+	"CandleStickChartForContinuousIntraDay",
+];
+
+var examplesToPublish_DiscontinuousIntraday = [
+	"CandleStickChartForDiscontinuousIntraDay",
+];
 //	"CandleStickChartWithUpdatingData",
 
 var examplesToPublish_TSV_Compare = [
@@ -65,6 +79,10 @@ var examplesToPublish_HorizontalStackedBar = [
 ];
 
 examplesToPublish_TSV.forEach(writeChart(renderChartWithOHLCData()));
+
+examplesToPublish_ContinuousIntraday.forEach(writeChart(renderChartWithOHLCData("bitfinex_xbtusd_1m.csv", "csv")));
+examplesToPublish_DiscontinuousIntraday.forEach(writeChart(renderChartWithOHLCData("MSFT_INTRA_DAY.tsv")));
+
 examplesToPublish_TSV_Compare.forEach(writeChart(renderChartWithOHLCData("comparison.tsv")));
 examplesToPublish_Bubble.forEach(writeChart(renderChartWithFile("bubble.json")));
 examplesToPublish_Bar.forEach(writeChart(renderChartWithFile("barData.json")));
@@ -72,8 +90,10 @@ examplesToPublish_GroupedBar.forEach(writeChart(renderChartWithFile("groupedBarD
 // examplesToPublish_HorizontalBar.forEach(writeChart(renderChartWithBubbleData));
 // examplesToPublish_HorizontalStackedBar.forEach(writeChart(renderChartWithBubbleData));
 
-function renderChartWithOHLCData(fileName) {
+function renderChartWithOHLCData(fileName, dataType) {
 	var file = fileName || "MSFT.tsv"
+	dataType = dataType || "tsv";
+
 	var comment = !!fileName
 		? ""
 		: "/* change MSFT.tsv to MSFT_full.tsv above to see how this works with lots of data points */"
@@ -81,7 +101,7 @@ function renderChartWithOHLCData(fileName) {
 		var tsvFile = mode === "DEV" ? `../docs/data/${file}` : `//rrag.github.io/react-stockcharts/data/${file}`;
 		var render = `
 var parseDate = d3.time.format("%Y-%m-%d").parse;
-d3.tsv("${tsvFile}", (err, data) => {
+d3["${dataType}"]("${tsvFile}", (err, data) => {
 	${comment}
 	data.forEach((d, i) => {
 		d.date = new Date(parseDate(d.date).getTime());

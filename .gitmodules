@@ -100,3 +100,27 @@
 [submodule "examples/CandleStickChartWithCompare"]
 	path = examples/CandleStickChartWithCompare
 	url = git@gist.github.com:/759f1ada33878e3239a5.git
+[submodule "examples/CandleStickChartForContinuousIntraDay"]
+	path = examples/CandleStickChartForContinuousIntraDay
+	url = git@gist.github.com:/f11fcc9d0867a34789c2efd346ca112a
+[submodule "examples/CandleStickChartForDiscontinuousIntraDay"]
+	path = examples/CandleStickChartForDiscontinuousIntraDay
+	url = git@gist.github.com:/dc853a365171d1770ada7ecc107d08de
+[submodule "examples/CandleStickChartWithAnnotation"]
+	path = examples/CandleStickChartWithAnnotation
+	url = git@gist.github.com:/46a2db7be6336500bedee27f5fa08713
+[submodule "examples/CandleStickChartWithHoverTooltip"]
+	path = examples/CandleStickChartWithHoverTooltip
+	url = git@gist.github.com:/9a070195e699d133932b3f368fe702d3
+[submodule "examples/VolumeProfileChart"]
+	path = examples/VolumeProfileChart
+	url = git@gist.github.com:/7be99030051fc80c070cfe5b7abf8c4f
+[submodule "examples/VolumeProfileBySessionChart"]
+	path = examples/VolumeProfileBySessionChart
+	url = git@gist.github.com:/91f4d66273e693b2054161dc8ff170a2
+[submodule "examples/MovingAverageCrossOverAlgorithmV1"]
+	path = examples/MovingAverageCrossOverAlgorithmV1
+	url = git@gist.github.com:/7feb29450469cf60773c520133a31511
+[submodule "examples/MovingAverageCrossOverAlgorithmV2"]
+	path = examples/MovingAverageCrossOverAlgorithmV2
+	url = git@gist.github.com:/b944f7ef22a42956198d3384c05f1777

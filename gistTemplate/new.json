@@ -1,0 +1,9 @@
+{
+    "description": "MovingAverageCrossOverAlgorithmV2 with react-stockcharts",
+    "public": true,
+    "files": {
+        "README.md": {
+            "content": "TEST"
+        }
+    }
+}

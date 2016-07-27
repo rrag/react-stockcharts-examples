@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>React Stockcharts - CHART_NAME_HERE Example</title>
+
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.4.4/babel.min.js"></script>
+
+    <!-- <script type="text/javascript" src="//npmcdn.com/react-stockcharts@latest/dist/react-stockcharts.min.js"></script> -->
+    <script type="text/javascript" src="//rrag.github.io/react-stockcharts/dist/react-stockcharts.min.js"></script>
+  </head>
+  <body>
+    <div id="chart">
+    </div>
+    <script>
+      // Use babel transform so the examples work on the browser
+      d3.xhr("./CHART_NAME_HERE.jsx", "text/plain")
+        .get(function(err, data) {
+          var outputEl = document.getElementById('chart');
+          try {
+            var output = Babel.transform(data.responseText, { presets: ["es2015", "react", "stage-2"] }).code;
+            eval(output);
+          } catch (ex) {
+            outputEl.innerHTML = 'ERROR: ' + ex.message;
+          }
+        })
+    </script>
+  </body>
+</html>

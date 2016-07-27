@@ -2,38 +2,34 @@
 "use strict";
 import ReStock from "react-stockcharts";
 import React from "react";
+import ReactDOM from "react-dom";
 import d3 from "d3";
 
-var { ChartCanvas, Chart, DataSeries } = ReStock;
+var { ChartCanvas, Chart } = ReStock;
+
 var { CandlestickSeries } = ReStock.series;
 var { XAxis, YAxis } = ReStock.axes;
-var { ChartWidthMixin } = ReStock.helper;
+var { fitWidth, TypeChooser } = ReStock.helper;
 
-var AreaChart = React.createClass({
-	mixins: [ChartWidthMixin],
-	propTypes: {
-		data: React.PropTypes.array.isRequired,
-		type: React.PropTypes.oneOf(["svg", "hybrid"]).isRequired,
-	},
+class ChartViz extends React.Component {
 	render() {
-		if (this.state === null || !this.state.width) return <div />;
-		var { data, type } = this.props;
+		const {type, width, data} = this.props;
 		return (
-			<ChartCanvas width={this.state.width} height={400}
-						 margin={{left: 35, right: 50, top:10, bottom: 30}}
-						 data={data} type={type}>
-			  <Chart id={1} xAccessor={(d) => d.date}>
-				<XAxis axisAt="bottom" orient="bottom" ticks={6}/>
-				<YAxis axisAt="left" orient="left" ticks={5}/>
-				<DataSeries id={0} yAccessor={CandlestickSeries.yAccessor}>
-				  <CandlestickSeries />
-				</DataSeries>
-			  </Chart>
+		<ChartCanvas width={width} height={400}
+					margin={{left: 0, right: 0, top:25, bottom: 30}} type={type}
+					data={data}
+					seriesName='CandleStick'
+					xAccessor={d => d.date} xScale={d3.time.scale()}>
+
+				<Chart id={1} yExtents={d => [d.high, d.low]}>
+					<XAxis axisAt="bottom" orient="bottom" ticks={6} stroke="none" tickStroke="#9E9E9E"/>
+					<YAxis axisAt="left" orient="right" ticks={10} stroke="none" tickStroke="#9E9E9E"/>
+					<CandlestickSeries fill={d => d.close > d.open ? "#32c2b0" : "#EDB24E"}/>
+				</Chart>
 			</ChartCanvas>
 		);
 	}
-});
-
+}
 
 var parseDate = d3.time.format("%Y-%m-%d").parse;
 d3.tsv("docs/data/MSFT.tsv", (err, data) => {
@@ -48,12 +44,13 @@ d3.tsv("docs/data/MSFT.tsv", (err, data) => {
 		// console.log(d);
 	});
 
-	var i = 5;
+	ChartViz = fitWidth(ChartViz);
+	ReactDOM.render(<ChartViz data={data} type="hybrid"/>, document.getElementById("chart"));
 
-	setInterval(function () {
+	/*setTimeout(function () {
 		var chartData = data.slice(0, i);
 		i++;
 		console.log("here")
-		React.render(<AreaChart data={chartData} type="svg"/>, document.getElementById("chart"));
-	}, 1000);
+		ReactDOM.render(<Chart data={data} type="svg"/>, document.getElementById("chart"));
+	}, 1000);*/
 });

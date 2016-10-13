@@ -121,3 +121,6 @@
 [submodule "examples/MovingAverageCrossOverAlgorithmV2"]
 	path = examples/MovingAverageCrossOverAlgorithmV2
 	url = git@gist.github.com:/b944f7ef22a42956198d3384c05f1777
+[submodule "examples/HeikinAshi"]
+	path = examples/HeikinAshi
+	url = git@gist.github.com:/51379c24e9751d46dcea.git

@@ -8,8 +8,8 @@ var root = path.join(__dirname, "..");
 var args = process.argv.slice(2);
 var mode = args[0];
 
-const parseDate = `d3.time.format("%Y-%m-%d").parse`
-const parseDateTime = `d3.time.format("%Y-%m-%d %H:%M:%S").parse`
+const parseDate = `d3.timeParse("%Y-%m-%d")`
+const parseDateTime = `d3.timeParse("%Y-%m-%d %H:%M:%S")`
 
 var examplesToPublish_TSV = [
 	"AreaChart",
@@ -138,9 +138,20 @@ function writeChart(chartRenderer) {
 		fs.createReadStream(source)
 			// .pipe(replaceStream(/var { fitWidth } = ReStock.helper;/, "var { fitWidth, TypeChooser } = rs.helper;"))
 			// .pipe(replaceStream(/import rs .*/g, "var rs = ReStock.default;"))
-			.pipe(replaceStream(/import (.*) from "react-stockcharts"/g, "var $1 = ReStock;"))
+			.pipe(replaceStream(/import (.*) from "react-stockcharts"/g, "var $1 = ReStock"))
+			.pipe(replaceStream(/import (.*) from "..\/..\/..\/src\/"/g, "var $1 = ReStock"))
 			.pipe(replaceStream(/import .*/g, ""))
 			.pipe(replaceStream(/var { fitWidth } = helper;/g, "var { fitWidth, TypeChooser } = helper;"))
+			.pipe(replaceStream(/\btimeFormat\b/g, "d3.timeFormat"))
+			.pipe(replaceStream(/\bformat\b/g, "d3.format"))
+			.pipe(replaceStream(/\bscaleTime\b/g, "d3.scaleTime"))
+			.pipe(replaceStream(/\bscalePoint\b/g, "d3.scalePoint"))
+			.pipe(replaceStream(/\bscaleLinear\b/g, "d3.scaleLinear"))
+			.pipe(replaceStream(/\bextent\b/g, "d3.extent"))
+			.pipe(replaceStream(/\bscaleOrdinal\b/g, "d3.scaleOrdinal"))
+			.pipe(replaceStream(/\bschemeCategory10\b/g, "d3.schemeCategory10"))
+			.pipe(replaceStream(/\bset\b/g, "d3.set"))
+			.pipe(replaceStream(/\bscaleLog\b/g, "d3.scaleLog"))
 			.pipe(replaceStream(/\n\n/, "\n"))
 			.pipe(replaceStream(/\n\n/, "\n"))
 			.pipe(replaceStream(/\n\n/, "\n"))

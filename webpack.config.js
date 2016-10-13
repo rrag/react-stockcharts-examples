@@ -7,7 +7,6 @@ module.exports = {
 		app: path.join(__dirname, "node_modules/react-stockcharts-src/src/index.js"),
 	},
 	devtool: "sourcemap",
-	debug: true,
 	output: {
 		path: path.join(__dirname, "build/dist/"),
 		filename: "react-stockcharts.js",
@@ -34,6 +33,6 @@ module.exports = {
 	},
 	resolve: {
 		// root: [__dirname, path.join(__dirname, "src"), path.join(__dirname, "docs")],
-		extensions: ["", ".js", ".jsx", ".scss", ".md"]
+		extensions: [".js", ".jsx", ".scss", ".md"]
 	}
 };

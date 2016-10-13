@@ -23,7 +23,7 @@ var examplesToPublish_TSV = [
 	"CandleStickStockScaleChartWithVolumeBarV1",
 	"CandleStickStockScaleChartWithVolumeBarV2",
 	"CandleStickStockScaleChartWithVolumeBarV3",
-	"HaikinAshi",
+	"HeikinAshi",
 	"Kagi",
 	"PointAndFigure",
 	"Renko",
@@ -136,10 +136,11 @@ function writeChart(chartRenderer) {
 	return (eachEx) => {
 		var source = path.join(root, "node_modules", "react-stockcharts-src", "docs", "lib", "charts", eachEx + ".jsx");
 		fs.createReadStream(source)
-			.pipe(replaceStream(/var { fitWidth } = ReStock.helper;/, "var { fitWidth, TypeChooser } = rs.helper;"))
-			.pipe(replaceStream(/ReStock/g, "rs"))
-			.pipe(replaceStream(/import rs .*/g, "var rs = ReStock.default;"))
+			// .pipe(replaceStream(/var { fitWidth } = ReStock.helper;/, "var { fitWidth, TypeChooser } = rs.helper;"))
+			// .pipe(replaceStream(/import rs .*/g, "var rs = ReStock.default;"))
+			.pipe(replaceStream(/import (.*) from "react-stockcharts"/g, "var $1 = ReStock;"))
 			.pipe(replaceStream(/import .*/g, ""))
+			.pipe(replaceStream(/var { fitWidth } = helper;/g, "var { fitWidth, TypeChooser } = helper;"))
 			.pipe(replaceStream(/\n\n/, "\n"))
 			.pipe(replaceStream(/\n\n/, "\n"))
 			.pipe(replaceStream(/\n\n/, "\n"))
